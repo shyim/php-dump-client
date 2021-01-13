@@ -1,0 +1,20 @@
+{
+  "name": "shyim/php-dump-client",
+  "license": "mit",
+  "autoload": {
+    "psr-4": {
+      "PhpDumpClient\\": "src/"
+    },
+    "files": ["functions.php"]
+  },
+  "require": {
+    "php": "^7.4",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "doctrine/sql-formatter": "^1.1",
+    "symfony/var-dumper": "5.2.*"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
