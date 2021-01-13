@@ -1,0 +1,52 @@
+name: Generate Prefixed Code
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: 7.4
+
+    - uses: actions/checkout@v2
+
+    - name: Composer install
+      run: composer install
+  
+    - name: Download scoper
+      run: wget https://github.com/humbug/php-scoper/releases/download/0.14.0/php-scoper.phar
+    
+    - name: Scope
+      run: php build-prefix.php
+      
+    - name: Clone Prefix Repository
+      uses: actions/checkout@v2
+      with:
+        repository: shyim/php-dump-client-prefixed
+        persist-credentials: false
+        path: prefixed
+    
+    - name: Copy build files to prefix
+      run: cp -R build/* prefixed/
+    
+    - uses: EndBug/add-and-commit@v6
+      with:
+        add: '.'
+        author_name: Shyim Bot
+        author_email: bot@shyim.de
+        cwd: './prefixed'
+        push: false
+        branch: main
+        message: 'Update Prefix Repository'
+        token: ${{ secrets.GH_TOKEN }}
+        
+    - name: Push
+      run: |
+        cd prefixed
+        git remote set-url origin https://shyim:${{ secrets.GH_TOKEN }}@github.com/shyim/php-dump-client-prefixed.git
+        git push -u origin main
