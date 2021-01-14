@@ -4,6 +4,7 @@ namespace PhpDumpClient;
 
 use Doctrine\SqlFormatter\NullHighlighter;
 use Doctrine\SqlFormatter\SqlFormatter;
+use PhpDumpClient\Extensions\Doctrine;
 use PhpDumpClient\Message\Message;
 use PhpDumpClient\Message\Payload\ClearPayload;
 use PhpDumpClient\Message\Payload\CodePayload;
@@ -146,6 +147,11 @@ class Client
         return $this;
     }
 
+    public function doctrine(): Doctrine
+    {
+        return new Doctrine($this);
+    }
+
     public function send(Message $message): void
     {
         $message->tag(...$this->tags);
@@ -170,9 +176,17 @@ class Client
 
     protected function createMessage(): Message
     {
-        $backtrace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        $backtrace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 10);
 
-        return new Message($this->stripPath($backtrace[1]['file']), $backtrace[1]['line']);
+        foreach ($backtrace as $backtrace) {
+            if (\strpos($backtrace['file'], __DIR__) === 0) {
+                continue;
+            }
+
+            return new Message($this->stripPath($backtrace['file']), $backtrace['line']);
+        }
+
+        throw new \RuntimeException('Cannot detect entry point');
     }
 
     private function lockExists(string $id): bool
