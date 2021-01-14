@@ -16,6 +16,11 @@ or Prefixed (Without requiring other dependencies)
 composer req shyim/php-dump-client-prefixed
 ```
 
+or `auto_prepend_file` globally useable
+
+* Clone `shyim/php-dump-client-prefixed` somewhere
+* Configure `auto_prepend_file=PREFIXED_FOLDER/prepend.php`
+
 ## Usage
 
 * Start the [Debug Server first](https://github.com/shyim/php-dump-server)
