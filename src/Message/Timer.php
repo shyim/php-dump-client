@@ -8,7 +8,7 @@ use PhpDumpClient\Message\Payload\TablePayload;
 
 class Timer
 {
-    private int $time;
+    private float $time;
 
     private int $memoryUsage;
 
@@ -56,7 +56,7 @@ class Timer
         $currentPeakMemoryUsage = \memory_get_peak_usage(true);
 
         $this->table->addRow(
-            \microtime(true) - $this->time,
+            (string) (\microtime(true) - $this->time),
             $this->formatBytes($currentMemoryUsage),
             $this->formatBytes($currentPeakMemoryUsage)
         );
