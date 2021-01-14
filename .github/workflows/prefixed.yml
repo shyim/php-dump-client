@@ -50,3 +50,15 @@ jobs:
         cd prefixed
         git remote set-url origin https://shyim:${{ secrets.GH_TOKEN }}@github.com/shyim/php-dump-client-prefixed.git
         git push -u origin main
+
+    - name: Get the version
+      id: get_version
+      if: startsWith(github.ref, 'refs/tags/')
+      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+    - name: Push Tag
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        cd prefixed
+        git tag ${{ steps.get_version.outputs.VERSION }}
+        git push -u origin ${{ steps.get_version.outputs.VERSION }}
