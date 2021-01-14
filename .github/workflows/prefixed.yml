@@ -3,6 +3,8 @@ name: Generate Prefixed Code
 on:
   push:
     branches: [ master ]
+    tags:
+      - '*'
 
 jobs:
   build:
