@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace PhpDumpClient\Message\Payload;
 
@@ -7,6 +7,7 @@ class TablePayload extends AbstractPayload
     protected string $type = 'table';
 
     protected array $headers = [];
+
     protected array $rows = [];
 
     public function __construct(array $headers = [], array $rows = [])

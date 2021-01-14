@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace PhpDumpClient\Message;
 
@@ -7,6 +7,7 @@ use PhpDumpClient\Struct;
 class Origin extends Struct
 {
     protected string $fileName;
+
     protected int $lineNumber;
 
     public function __construct(string $fileName, int $lineNumber)

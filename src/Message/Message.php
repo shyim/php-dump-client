@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace PhpDumpClient\Message;
 
@@ -27,7 +27,7 @@ class Message extends Struct
     public function __construct(string $fileName, int $lineNumber)
     {
         $this->uuid = Uuid::randomHex();
-        $this->time = time();
+        $this->time = \time();
         $this->origin = new Origin($fileName, $lineNumber);
     }
 
@@ -38,7 +38,7 @@ class Message extends Struct
         return $this;
     }
 
-    function payload(AbstractPayload $payload): self
+    public function payload(AbstractPayload $payload): self
     {
         $this->payloads[] = $payload;
 

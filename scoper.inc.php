@@ -41,9 +41,9 @@ return [
     // For more see: https://github.com/humbug/php-scoper#patchers
     'patchers' => [
         function (string $filePath, string $prefix, string $contents): string {
-            if ($filePath === getcwd() . '/functions.php') {
-                $contents = str_replace($prefix . '\\\\pd', 'pd', $contents);
-                $contents = str_replace('namespace ' . $prefix . ';', 'require __DIR__ . \'/vendor/autoload.php\';', $contents);
+            if ($filePath === \getcwd() . '/functions.php') {
+                $contents = \str_replace($prefix . '\\\\pd', 'pd', $contents);
+                $contents = \str_replace('namespace ' . $prefix . ';', 'require __DIR__ . \'/vendor/autoload.php\';', $contents);
             }
 
             return $contents;
