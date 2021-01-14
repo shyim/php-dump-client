@@ -2,7 +2,7 @@
 
 namespace PhpDumpClient;
 
-use Doctrine\SqlFormatter\NullHighlighter;
+use Doctrine\SqlFormatter\HtmlHighlighter;
 use Doctrine\SqlFormatter\SqlFormatter;
 use PhpDumpClient\Extensions\Doctrine;
 use PhpDumpClient\Message\Message;
@@ -140,7 +140,12 @@ class Client
     public function logSql(string $sql): self
     {
         $msg = $this->createMessage();
-        $msg->payload(new CodePayload((new SqlFormatter(new NullHighlighter()))->format($sql), 'sql'));
+
+        $highlighterConfig = [
+            HtmlHighlighter::HIGHLIGHT_PRE => 'style="color: black; background-color: #e8e8e8;filter: invert(1);"'
+        ];
+
+        $msg->payload(new HtmlPayload((new SqlFormatter(new HtmlHighlighter($highlighterConfig)))->format($sql)));
 
         $this->send($msg);
 
