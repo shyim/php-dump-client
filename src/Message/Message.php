@@ -27,7 +27,7 @@ class Message extends Struct
     public function __construct(string $fileName, int $lineNumber)
     {
         $this->uuid = Uuid::randomHex();
-        $this->time = \time();
+        $this->time = \microtime(true);
         $this->origin = new Origin($fileName, $lineNumber);
     }
 
