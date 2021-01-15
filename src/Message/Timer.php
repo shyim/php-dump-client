@@ -20,42 +20,40 @@ class Timer
 
     private Message $message;
 
-    private string $title;
-
     public function __construct(string $title, Message $message, Client $client)
     {
         $this->time = \microtime(true);
         $this->memoryUsage = \memory_get_usage(true);
         $this->peakMemoryUsage = \memory_get_peak_usage(true);
-        $this->table = new TablePayload(['Time', 'Total Memory Usage', 'Peak Memory Usage']);
+        $this->table = new TablePayload(['Label', 'Time', 'Total Memory Usage', 'Peak Memory Usage']);
         $this->client = $client;
         $this->message = $message;
-        $this->title = $title;
 
         $this->message->payload(new HtmlPayload($title));
         $this->message->payload($this->table);
     }
 
-    public function checkpoint(): self
+    public function checkpoint(?string $label = null): self
     {
-        return $this->track();
+        return $this->track($label ?? '(Unlabeled)');
     }
 
     public function stop(): Client
     {
-        $this->track();
+        $this->track('(Stop)');
 
         $this->client->send($this->message);
 
         return $this->client;
     }
 
-    protected function track(): self
+    protected function track(string $label): self
     {
         $currentMemoryUsage = \memory_get_usage(true);
         $currentPeakMemoryUsage = \memory_get_peak_usage(true);
 
         $this->table->addRow(
+            $label,
             (string) (\microtime(true) - $this->time),
             $this->formatBytes($currentMemoryUsage),
             $this->formatBytes($currentPeakMemoryUsage)
@@ -74,6 +72,6 @@ class Timer
         $base = \log($size, 1024);
         $suffixes = ['', 'Kb', 'Mb', 'Gb', 'Tb'];
 
-        return \round(\pow(1024, $base - \floor($base)), $precision) . ' ' . $suffixes[\floor($base)];
+        return \round(1024 ** ($base - \floor($base)), $precision) . ' ' . $suffixes[\floor($base)];
     }
 }

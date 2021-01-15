@@ -7,7 +7,6 @@ use Doctrine\SqlFormatter\SqlFormatter;
 use PhpDumpClient\Extensions\Doctrine;
 use PhpDumpClient\Message\Message;
 use PhpDumpClient\Message\Payload\ClearPayload;
-use PhpDumpClient\Message\Payload\CodePayload;
 use PhpDumpClient\Message\Payload\HtmlPayload;
 use PhpDumpClient\Message\Payload\PausePayload;
 use PhpDumpClient\Message\Payload\TablePayload;
