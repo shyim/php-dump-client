@@ -46,6 +46,10 @@ return [
                 $contents = \str_replace('namespace ' . $prefix . ';', 'require __DIR__ . \'/vendor/autoload.php\';', $contents);
             }
 
+            if ($filePath === \getcwd() . '/src/Extensions/Doctrine.php') {
+                $contents = \str_replace('\_PhpScoper3fe455fa007d\Doctrine\DBAL\Query\QueryBuilder', '\Doctrine\DBAL\Query\QueryBuilder', $contents);
+            }
+
             return $contents;
         },
     ],
