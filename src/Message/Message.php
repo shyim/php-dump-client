@@ -12,7 +12,7 @@ class Message extends Struct
 
     protected Origin $origin;
 
-    protected int $time;
+    protected float $time;
 
     /**
      * @var string[]
