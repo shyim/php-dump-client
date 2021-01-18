@@ -4,9 +4,15 @@ namespace PhpDumpClient\Message\Payload;
 
 class HtmlPayload extends AbstractPayload
 {
-    protected string $type = 'html';
+    /**
+     * @var string
+     */
+    protected $type = 'html';
 
-    protected string $content;
+    /**
+     * @var string
+     */
+    protected $content;
 
     public function __construct(string $html)
     {

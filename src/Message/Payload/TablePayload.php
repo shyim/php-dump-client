@@ -4,11 +4,20 @@ namespace PhpDumpClient\Message\Payload;
 
 class TablePayload extends AbstractPayload
 {
-    protected string $type = 'table';
+    /**
+     * @var string
+     */
+    protected $type = 'table';
 
-    protected array $headers = [];
+    /**
+     * @var array
+     */
+    protected $headers = [];
 
-    protected array $rows = [];
+    /**
+     * @var array
+     */
+    protected $rows = [];
 
     public function __construct(array $headers = [], array $rows = [])
     {
@@ -25,7 +34,7 @@ class TablePayload extends AbstractPayload
 
     public function addHeader(string ...$header): self
     {
-        $this->headers = [...$this->headers, $header];
+        $this->headers = \array_merge($this->headers, $header);
 
         return $this;
     }

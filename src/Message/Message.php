@@ -8,21 +8,30 @@ use PhpDumpClient\Uuid;
 
 class Message extends Struct
 {
-    protected string $uuid;
+    /**
+     * @var string
+     */
+    protected $uuid;
 
-    protected Origin $origin;
+    /**
+     * @var Origin
+     */
+    protected $origin;
 
-    protected float $time;
+    /**
+     * @var float
+     */
+    protected $time;
 
     /**
      * @var string[]
      */
-    protected array $tags = [];
+    protected $tags = [];
 
     /**
      * @var AbstractPayload[]
      */
-    protected array $payloads = [];
+    protected $payloads = [];
 
     public function __construct(string $fileName, int $lineNumber)
     {
@@ -33,7 +42,7 @@ class Message extends Struct
 
     public function tag(string ...$tag): self
     {
-        $this->tags = [...$this->tags, ...$tag];
+        $this->tags = \array_merge($this->tags, $tag);
 
         return $this;
     }

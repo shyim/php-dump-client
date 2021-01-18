@@ -4,11 +4,20 @@ namespace PhpDumpClient\Message\Payload;
 
 class CodePayload extends AbstractPayload
 {
-    protected string $type = 'code';
+    /**
+     * @var string
+     */
+    protected $type = 'code';
 
-    protected string $code;
+    /**
+     * @var string
+     */
+    protected $code;
 
-    protected string $language;
+    /**
+     * @var string
+     */
+    protected $language;
 
     public function __construct(string $code, string $language = 'text')
     {

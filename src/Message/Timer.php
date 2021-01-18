@@ -8,17 +8,35 @@ use PhpDumpClient\Message\Payload\TablePayload;
 
 class Timer
 {
-    private float $time;
+    /**
+     * @var float
+     */
+    private $time;
 
-    private int $memoryUsage;
+    /**
+     * @var int
+     */
+    private $memoryUsage;
 
-    private int $peakMemoryUsage;
+    /**
+     * @var int
+     */
+    private $peakMemoryUsage;
 
-    private TablePayload $table;
+    /**
+     * @var TablePayload
+     */
+    private $table;
 
-    private Client $client;
+    /**
+     * @var Client
+     */
+    private $client;
 
-    private Message $message;
+    /**
+     * @var Message
+     */
+    private $message;
 
     public function __construct(string $title, Message $message, Client $client)
     {

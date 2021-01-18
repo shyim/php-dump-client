@@ -6,9 +6,15 @@ use PhpDumpClient\Struct;
 
 class Origin extends Struct
 {
-    protected string $fileName;
+    /**
+     * @var string
+     */
+    protected $fileName;
 
-    protected int $lineNumber;
+    /**
+     * @var int
+     */
+    protected $lineNumber;
 
     public function __construct(string $fileName, int $lineNumber)
     {

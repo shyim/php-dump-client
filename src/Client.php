@@ -16,9 +16,15 @@ use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 class Client
 {
-    private string $instanceUrl;
+    /**
+     * @var string
+     */
+    private $instanceUrl;
 
-    private array $tags = [];
+    /**
+     * @var array
+     */
+    private $tags = [];
 
     public function __construct()
     {
@@ -112,7 +118,7 @@ class Client
     public function tag(string ...$tag): self
     {
         $tagInstance = clone $this;
-        $tagInstance->tags = [... $tagInstance->tags, ...$tag];
+        $tagInstance->tags = \array_merge($tagInstance->tags, $tag);
 
         return $tagInstance;
     }
