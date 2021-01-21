@@ -4,6 +4,16 @@ declare(strict_types=1);
 
 use Isolated\Symfony\Component\Finder\Finder;
 
+$polyfillBootstraps = [
+    \getcwd() . '/vendor/symfony/polyfill-intl-normalizer/bootstrap.php',
+    \getcwd() . '/vendor/symfony/polyfill-ctype/bootstrap.php',
+    \getcwd() . '/vendor/symfony/polyfill-php73/bootstrap.php',
+    \getcwd() . '/vendor/symfony/polyfill-php80/bootstrap.php',
+    \getcwd() . '/vendor/symfony/polyfill-mbstring/bootstrap.php',
+    \getcwd() . '/vendor/symfony/polyfill-intl-grapheme/bootstrap.php',
+    \getcwd() . '/vendor/symfony/polyfill-php72/bootstrap.php'
+];
+
 return [
     // The prefix configuration. If a non null value will be used, a random prefix will be generated.
     'prefix' => '_PhpScoper3fe455fa007d',
@@ -40,11 +50,16 @@ return [
     //
     // For more see: https://github.com/humbug/php-scoper#patchers
     'patchers' => [
-        function (string $filePath, string $prefix, string $contents): string {
+        function (string $filePath, string $prefix, string $contents) use($polyfillBootstraps): string {
             if ($filePath === \getcwd() . '/functions.php') {
                 $contents = \str_replace($prefix . '\\\\pd', 'pd', $contents);
                 $contents = \str_replace('namespace ' . $prefix . ';', 'require __DIR__ . \'/vendor/autoload.php\';', $contents);
             }
+
+            if (in_array($filePath, $polyfillBootstraps, true)) {
+                $contents = \str_replace('namespace ' . $prefix . ';', '', $contents);
+            }
+
 
             if ($filePath === \getcwd() . '/src/Extensions/Doctrine.php') {
                 $contents = \str_replace('\_PhpScoper3fe455fa007d\Doctrine\DBAL\Query\QueryBuilder', '\Doctrine\DBAL\Query\QueryBuilder', $contents);
