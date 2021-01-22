@@ -17,7 +17,7 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "*",
-    "doctrine/dbal": "3.0.0"
+    "doctrine/dbal": "*"
   },
   "config": {
     "sort-packages": true
