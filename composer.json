@@ -20,6 +20,10 @@
     "doctrine/dbal": "*"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "platform-check": false,
+    "platform": {
+        "php": "7.2.0"
+    }
   }
 }
