@@ -11,6 +11,8 @@ if (!\function_exists('pd')) {
             $client = new Client();
         }
 
+        // To not overwrite the last message again and again
+        $client->setLastMessageId();
         return $client;
     }
 }

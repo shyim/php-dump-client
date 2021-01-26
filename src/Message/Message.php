@@ -33,9 +33,9 @@ class Message extends Struct
      */
     protected $payloads = [];
 
-    public function __construct(string $fileName, int $lineNumber)
+    public function __construct(string $fileName, int $lineNumber, ?string $uuid = null)
     {
-        $this->uuid = Uuid::randomHex();
+        $this->uuid = $uuid ?? Uuid::randomHex();
         $this->time = \microtime(true);
         $this->origin = new Origin($fileName, $lineNumber);
     }
