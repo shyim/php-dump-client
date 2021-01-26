@@ -17,6 +17,11 @@ use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 class Client
 {
     /**
+     * @var string|null
+     */
+    private $lastMessageId;
+
+    /**
      * @var string
      */
     private $instanceUrl;
@@ -46,7 +51,6 @@ class Client
         $cloner = new VarCloner();
         $cloner->setMaxItems(-1);
         $htmlDumper = new HtmlDumper();
-
 
         foreach ($arguments as $argument) {
             $data = $htmlDumper->dump($cloner->cloneVar($argument), true);
@@ -182,6 +186,8 @@ class Client
 
         \curl_exec($ch);
         \curl_close($ch);
+
+        $this->lastMessageId = $message->getId();
     }
 
     protected function createMessage(): Message
@@ -193,7 +199,7 @@ class Client
                 continue;
             }
 
-            return new Message($this->stripPath($backtrace['file']), $backtrace['line']);
+            return new Message($this->stripPath($backtrace['file']), $backtrace['line'], $this->lastMessageId ?? null);
         }
 
         throw new \RuntimeException('Cannot detect entry point');
@@ -213,7 +219,7 @@ class Client
         $resp = \curl_exec($ch);
         \curl_close($ch);
 
-        return $resp === "1";
+        return $resp === '1';
     }
 
     private function stripPath(string $path): string
@@ -225,5 +231,12 @@ class Client
         }
 
         return $path;
+    }
+
+    public function setLastMessageId(?string $lastMessageId = null): self
+    {
+        $this->lastMessageId = $lastMessageId;
+
+        return $this;
     }
 }
