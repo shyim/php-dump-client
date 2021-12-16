@@ -85,6 +85,6 @@ class Doctrine
                 break;
         }
 
-        return $result;
+        return (string) $result;
     }
 }
